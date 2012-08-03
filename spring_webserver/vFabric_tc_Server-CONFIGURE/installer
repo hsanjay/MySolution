@@ -1,0 +1,244 @@
+#!/usr/bin/python 
+
+import sys
+import os.path
+import shutil
+import tarfile
+import subprocess
+import grp
+
+from glob import glob
+from optparse import OptionParser
+
+# This script-level variable is used to track the stack of directory changes
+dir_stack = []
+
+def copy_to_working(item):
+    """Create a working folder and copy the file into it."""
+    if not os.path.exists("working"):
+        os.mkdir("working")
+    shutil.copy2(item, "working")
+
+def unzip_and_untar(item):
+    """Unpack the tarball into the working folder"""
+    print("Unpacking %s" % item)
+
+    f = tarfile.open(item, mode="r")
+    f.extractall(path="working")
+    f.close()
+
+def create_instance(tcserver_dir, instance_name="instance1"):
+    """Invoke tcServer's instance creation script."""
+    print("Creating an instance of tcServer in %s" % tcserver_dir)
+
+    pushdir(tcserver_dir)
+    subprocess.call(["./tcruntime-instance.sh", "create", instance_name])
+    popdir()
+
+def start_instance(tcserver_dir, instance_name="instance1"):
+   """Invoke tcServer's control script to start the instance."""
+   print("Starting up a tcServer instance...")
+
+   pushdir(tcserver_dir)
+   subprocess.call(["./tcruntime-ctl.sh", instance_name, "start"])
+   popdir()
+
+def stop_instance(tcserver_dir, instance_name="instance1"):
+   """Invoke tcServer's control script to stop the instance."""
+   print("Stopping a tcServer instance...")
+
+   pushdir(tcserver_dir)
+   subprocess.call(["./tcruntime-ctl.sh", instance_name, "stop"])
+   popdir()
+
+def setup_tc_server(rm_working_dir=True, tcserver_pattern="*tc*server*.tar.gz"):
+    print("Setting up tcServer...")
+
+    if rm_working_dir and os.path.exists("working"):
+        stop_tcserver() 
+        stop_ers()
+        # Recursively delete the working/ folder before getting started
+        if os.path.exists("working"): shutil.rmtree("working")
+
+    items = glob(os.path.join("packages", tcserver_pattern))
+    for item in items:
+        print("I found %s" % item)
+
+        if item.endswith(".tar.gz"):
+            copy_to_working(item)
+            working_item = glob(os.path.join("working", tcserver_pattern))[0]
+            unzip_and_untar(working_item)
+            tcserver_dir = [item for item in glob(os.path.join("working", "*tc*server*")) if not item.endswith(".tar.gz")][0]
+            create_instance(tcserver_dir)
+
+def start_tcserver():
+    try:
+        tcserver_dir = [item for item in glob(os.path.join("working", "*tc*server*")) if not item.endswith(".tar.gz")][0]
+        start_instance(tcserver_dir)
+    except:
+        print("Skipping tcServer")
+
+def stop_tcserver():
+    try:
+        tcserver_dir = [item for item in glob(os.path.join("working", "*tc*server*")) if not item.endswith(".tar.gz")][0]
+        stop_instance(tcserver_dir)
+    except:
+        print("Skipping tcServer")
+
+def nobody_exists():
+    try:
+        grp.getgrnam("nobody")
+        return True
+    except KeyError:
+        return False
+
+def extract_ers(item):
+    print("I'm in %s, calling ../%s" % (os.getcwd(), item))
+    subprocess.call(["../%s" % item])
+
+def create_instance_of_ers(instance_name="instance1"):
+    print("I'm configuring an instance of ERS...")
+
+    subprocess.call(["./fixrootpath.pl"]) # setup the ers-server.pl script properly
+    subprocess.call(["./ers-server.pl", "--server=%s" % instance_name, "--apachever=2.2", "--quiet"]) # create an instance
+
+    server_root = os.path.join("servers", instance_name)
+
+    shutil.move(os.path.join(server_root, "conf", "httpsd.conf"), os.path.join(server_root, "conf", "httpsd.conf.orig"))
+
+    #with open(os.path.join(server_root, "conf", "httpsd.conf.orig")) as input:
+    try:
+        input = open(os.path.join(server_root, "conf", "httpsd.conf.orig"))
+        output = open(os.path.join(server_root, "conf", "httpsd.conf"), "w")
+
+        for line in input.readlines():
+            line_to_write = line
+            if "8080" in line: line_to_write = line.replace("8080", "8081")
+            if "nobody" in line and not nobody_exists(): 
+                new_group = [item.gr_name for item in grp.getgrall() if item.gr_gid == os.getgid()][0]
+                line_to_write = line.replace("nobody", new_group)
+            output.write(line_to_write)
+        output.close()
+        input.close()
+    except IOError:
+        pass
+
+def start_ers(instance_name="instance1"):
+    try:
+        pushdir(os.path.join("working", "ers", "servers", instance_name, "bin"))
+        print("I'm starting up ERS...")
+        subprocess.call(["./apache_startup.sh", "start"])
+        popdir()
+    except:
+        print("Skipping ERS")
+
+def stop_ers(instance_name="instance1"):
+    try:
+        pushdir(os.path.join("working", "ers", "servers", instance_name, "bin"))
+        print("I'm stopping ERS...")
+        subprocess.call(["./apache_startup.sh", "stop"])
+        popdir()
+    except:
+        print("Skipping ERS")
+
+def setup_ers(ers_pattern, rm_working_dir=False):
+    print("Setting up ERS...")
+
+    if rm_working_dir:
+        stop_tcserver()
+        stop_ers()
+        # Recursively delete the working/ folder getting started
+        if os.path.exists("working"): shutil.rmtree("working")
+
+    items = glob(os.path.join("packages", ers_pattern))
+    for item in items:
+        print("I found %s" % item)
+      
+        if item.endswith(".sfx"):
+            copy_to_working(item)
+            pushdir("working")
+            working_item = glob("ers*")[0]
+            os.mkdir("ers")
+            pushdir("ers")
+            extract_ers(working_item)
+            create_instance_of_ers()
+            popdir()
+            popdir()
+
+def pushdir(new_dir):
+    dir_stack.append(os.getcwd())
+    os.chdir(new_dir)
+
+def popdir():
+    os.chdir(dir_stack.pop())
+
+def exit(message):
+    print("="*len(message))
+    print(message)
+    print("="*len(message))
+    sys.exit(1)
+
+if __name__ == "__main__":
+    full_platform = os.uname()[0] + os.uname()[2] + os.uname()[4]
+    short_platform = None
+    acceptable = [platform for platform in ["Linux", "SunOS5.10i86pc"] if platform in full_platform]
+    if len(acceptable) == 0:
+        exit("%s is not supported! Exiting." % full_platform)
+    else:
+        if "Linux" in full_platform:
+            short_platform = "linux"
+        elif "SunOS5.10i86pc" in full_platform:
+            short_platform = "x86-solaris-10"
+
+    parser = OptionParser()
+    parser.add_option("-t", "--setup-tcserver", dest="setup_tcserver", help="setup an instance of tcServer (default: on)", action="store_true")
+    parser.add_option("-e", "--setup-ers", dest="setup_ers", help="setup an instance of ERS (default: on)", action="store_true")
+    parser.add_option("-s", "--start", dest="start", help="start up tcServer and/or ERS (default: on)", action="store_true")
+    parser.add_option("--skip-start", dest="skip_start", help="skip the default startup of tcServer and/or ERS", action="store_true")
+    parser.add_option("--stop", dest="stop", help="stop the tcServer and/or ERS", action="store_true")
+    (options, args) = parser.parse_args()
+
+    # default settings
+    opt_setup_tcserver = True
+    opt_setup_ers = True
+    opt_start = True
+    opt_stop = False
+
+    if options.setup_tcserver and not options.setup_ers:
+        opt_setup_ers = False
+
+    if options.setup_ers and not options.setup_tcserver:
+        opt_setup_tcserver = False
+
+    if options.skip_start:
+        opt_start = False
+
+    if options.stop:
+        opt_setup_tcserver = False
+        opt_setup_ers = False
+        opt_start = False
+        options.start = False
+        opt_stop = True
+
+    if options.start:
+        opt_setup_tcserver = False
+        opt_setup_ers = False
+        opt_start = True
+        opt_stop = False
+        options.stop = False
+
+    if opt_setup_tcserver:
+        print("Setting up tcServer...")
+        setup_tc_server()
+    if opt_setup_ers:
+        setup_ers(ers_pattern="ers*%s*" % short_platform)
+        print("Setting up ERS...")
+    if opt_start:
+        print("Starting up tcServer and/or ERS...")
+        start_tcserver()     
+        start_ers()
+    if opt_stop:
+        print("Stopping tcServer and/or ERS...")
+        stop_tcserver()     
+        stop_ers()
+

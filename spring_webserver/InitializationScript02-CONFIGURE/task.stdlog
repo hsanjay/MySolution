@@ -1,0 +1,4 @@
+useradd: warning: the home directory already exists.
+Not copying any file from skel directory into it.
+Changing password for user ftpuser.
+passwd: all authentication tokens updated successfully.

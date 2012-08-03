@@ -1,0 +1,54 @@
+Setting ftp_proxy to 
+Setting http_proxy to 
+Setting https_proxy to 
+Using operating system 'CentOS' and version '5.8'
+
+###############################################################
+#  One or more PROXY(s) not set. Network downloads may fail   #
+###############################################################
+
+Starting tc Server installation.
+Creating instance 'instance1' ...
+  Using separate layout
+  Creating bin/setenv.sh
+  Applying template 'base'
+    Copying template's contents
+    Applying fragment 'context-fragment.xml' to 'conf/context.xml'
+    Applying fragment 'server-fragment.xml' to 'conf/server.xml'
+    Applying fragment 'web-fragment.xml' to 'conf/web.xml'
+    Applying fragment 'tomcat-users-fragment.xml' to 'conf/tomcat-users.xml'
+  Applying template 'bio'
+    Copying template's contents
+    Applying fragment 'server-fragment.xml' to 'conf/server.xml'
+  Configuring instance 'instance1' to use Tomcat version 6.0.29.B.RELEASE
+  Setting permissions
+Instance created
+Connector summary
+  Port: 8080   Type: Blocking IO   Secure: false
+INFO Instance name:      instance1
+INFO Script directory:   /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO tc Runtime location:/opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO Instance base:      /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO Binary dir:         /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard/tomcat-6.0.29.B.RELEASE
+INFO Runtime version:    6.0.29.B.RELEASE
+INFO Script version:     2.1.0.RELEASE
+Setting up tcServer...
+Setting up tcServer...
+I found packages/springsource-tc-server-standard-2-RELEASE.tar.gz
+Unpacking working/springsource-tc-server-standard-2-RELEASE.tar.gz
+Creating an instance of tcServer in working/springsource-tc-server-standard
+Starting up tcServer and/or ERS...
+Starting up a tcServer instance...
+Skipping ERS
+INFO Derived instance name: instance1
+INFO Executing /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard/./tcruntime-ctl.sh
+INFO Instance name:      instance1
+INFO Script directory:   /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO tc Runtime location:/opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO Instance base:      /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard
+INFO Binary dir:         /opt/vmware/darwin/tcserver/working/springsource-tc-server-standard/tomcat-6.0.29.B.RELEASE
+INFO Runtime version:    6.0.29.B.RELEASE
+INFO Script version:     2.1.0.RELEASE
+Instance is running as PID=3038, shutting down...
+Instance is running PID=3038, sleeping for up to 60 seconds waiting for shutdown
+Instance shut down gracefully

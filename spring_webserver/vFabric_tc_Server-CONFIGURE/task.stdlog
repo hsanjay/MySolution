@@ -1,0 +1,26 @@
+Setting ftp_proxy to 
+Setting http_proxy to 
+Setting https_proxy to 
+Using operating system 'CentOS' and version '5.8'
+
+###############################################################
+#  One or more PROXY(s) not set. Network downloads may fail   #
+###############################################################
+
+Creating instance 'instance1' ...
+  Using separate layout
+  Creating bin/setenv.sh
+  Applying template 'base'
+    Copying template's contents
+    Applying fragment 'context-fragment.xml' to 'conf/context.xml'
+    Applying fragment 'server-fragment.xml' to 'conf/server.xml'
+    Applying fragment 'web-fragment.xml' to 'conf/web.xml'
+    Applying fragment 'tomcat-users-fragment.xml' to 'conf/tomcat-users.xml'
+  Applying template 'bio'
+    Copying template's contents
+    Applying fragment 'server-fragment.xml' to 'conf/server.xml'
+  Configuring instance 'instance1' to use Tomcat version 6.0.29.B.RELEASE
+  Setting permissions
+Instance created
+Connector summary
+  Port: 8080   Type: Blocking IO   Secure: false
