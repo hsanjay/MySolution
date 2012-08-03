@@ -1,0 +1,63 @@
+/tmp/1148/spring_server/Spring_Integration_HTTP_Sample/task.sh: line 4: .: filename argument required
+.: usage: . filename [arguments]
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.springframework.integration.samples:http:war:2.1.0.BUILD-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.codehaus.mojo:tomcat-maven-plugin is missing. @ line 81, column 11
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+Downloading: http://repo.maven.apache.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.2/exec-maven-plugin-1.2.pom
+3/7 KB   7/7 KB   7/7 KB            Downloaded: http://repo.maven.apache.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.2/exec-maven-plugin-1.2.pom (7 KB at 25.9 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/24/mojo-parent-24.pom
+3/23 KB   7/23 KB   7/23 KB   10/23 KB   12/23 KB   14/23 KB   15/23 KB   16/23 KB   19/23 KB   23/23 KB              Downloaded: http://repo.maven.apache.org/maven2/org/codehaus/mojo/mojo-parent/24/mojo-parent-24.pom (23 KB at 458.8 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.2/exec-maven-plugin-1.2.jar
+2/36 KB    6/36 KB   10/36 KB   14/36 KB   14/36 KB   15/36 KB   16/36 KB   20/36 KB   21/36 KB   25/36 KB   28/36 KB   29/36 KB   33/36 KB   36/36 KB   36/36 KB              Downloaded: http://repo.maven.apache.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.2/exec-maven-plugin-1.2.jar (36 KB at 366.5 KB/sec)
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Samples (Basic) - HTTP Demo 2.1.0.BUILD-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] >>> exec-maven-plugin:1.2:java (default-cli) @ http >>>
+[INFO] 
+[INFO] <<< exec-maven-plugin:1.2:java (default-cli) @ http <<<
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2:java (default-cli) @ http ---
+Downloading: http://repo.maven.apache.org/maven2/junit/junit/3.8.2/junit-3.8.2.pom
+747/747 B               Downloaded: http://repo.maven.apache.org/maven2/junit/junit/3.8.2/junit-3.8.2.pom (747 B at 25.2 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-api/2.0/maven-plugin-api-2.0.pom
+601/601 B               Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-api/2.0/maven-plugin-api-2.0.pom (601 B at 18.3 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/maven/maven/2.0/maven-2.0.pom
+3/9 KB      7/9 KB   9/9 KB            Downloaded: http://repo.maven.apache.org/maven2/org/apache/maven/maven/2.0/maven-2.0.pom (9 KB at 167.9 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/commons/commons-exec/1.0.1/commons-exec-1.0.1.pom
+2/8 KB   6/8 KB   8/8 KB            Downloaded: http://repo.maven.apache.org/maven2/org/apache/commons/commons-exec/1.0.1/commons-exec-1.0.1.pom (8 KB at 156.4 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/11/commons-parent-11.pom
+2/25 KB   6/25 KB   9/25 KB   10/25 KB   11/25 KB   14/25 KB   18/25 KB   22/25 KB   23/25 KB   25/25 KB              Downloaded: http://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/11/commons-parent-11.pom (25 KB at 601.8 KB/sec)
+Downloading: http://repo.maven.apache.org/maven2/org/apache/commons/commons-exec/1.0.1/commons-exec-1.0.1.jar
+3/49 KB    6/49 KB   7/49 KB   8/49 KB   10/49 KB   11/49 KB   12/49 KB   14/49 KB   15/49 KB   16/49 KB   17/49 KB   19/49 KB   20/49 KB   21/49 KB   23/49 KB   24/49 KB   25/49 KB   27/49 KB   28/49 KB   29/49 KB   31/49 KB   32/49 KB   33/49 KB   35/49 KB   36/49 KB   37/49 KB   39/49 KB   40/49 KB   41/49 KB   44/49 KB   46/49 KB   47/49 KB   49/49 KB              Downloaded: http://repo.maven.apache.org/maven2/org/apache/commons/commons-exec/1.0.1/commons-exec-1.0.1.jar (49 KB at 113.2 KB/sec)
+18:44:23.961 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.context.support.ClassPathXmlApplicationContext] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@60029d: startup date [Fri Aug 03 18:44:23 UTC 2012]; root of context hierarchy
+18:44:24.004 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.beans.factory.xml.XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [META-INF/spring/integration/http-outbound-config.xml]
+18:44:24.218 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.config.xml.DefaultConfiguringBeanFactoryPostProcessor] No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+18:44:24.218 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.config.xml.DefaultConfiguringBeanFactoryPostProcessor] No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+18:44:24.227 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.beans.factory.support.DefaultListableBeanFactory] Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1f18cbe: defining beans [org.springframework.integration.internalDefaultConfiguringBeanFactoryPostProcessor,requestGateway,requestChannel,org.springframework.integration.http.outbound.HttpRequestExecutingMessageHandler#0,org.springframework.integration.config.ConsumerEndpointFactoryBean#0,nullChannel,errorChannel,_org.springframework.integration.errorLogger,taskScheduler,org.springframework.integration.config.IdGeneratorConfigurer#0]; root of factory hierarchy
+18:44:24.291 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler] Initializing ExecutorService  'taskScheduler'
+18:44:24.316 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.gateway.GatewayProxyFactoryBean$MethodInvocationGateway] started requestGateway
+18:44:24.316 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.gateway.GatewayProxyFactoryBean] started requestGateway
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.context.support.DefaultLifecycleProcessor] Starting beans in phase -2147483648
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.endpoint.EventDrivenConsumer] Adding {message-handler} as a subscriber to the 'requestChannel' channel
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.channel.DirectChannel] Channel 'requestChannel' has 1 subscriber(s).
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.endpoint.EventDrivenConsumer] started org.springframework.integration.config.ConsumerEndpointFactoryBean#0
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.endpoint.EventDrivenConsumer] Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.channel.PublishSubscribeChannel] Channel 'errorChannel' has 1 subscriber(s).
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.endpoint.EventDrivenConsumer] started _org.springframework.integration.errorLogger
+18:44:24.478 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.context.support.DefaultLifecycleProcessor] Starting beans in phase 0
+18:44:24.623 INFO  [org.springframework.integration.samples.http.HttpClientDemo.main()][org.springframework.integration.samples.http.HttpClientDemo] Replied with: Hello from the other side
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.674s
+[INFO] Finished at: Fri Aug 03 18:44:24 UTC 2012
+[INFO] Final Memory: 6M/247M
+[INFO] ------------------------------------------------------------------------
